@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/agenciesFragment">
+    <fragment
+        android:id="@+id/agenciesFragment"
+        android:name="com.example.resotest.view.agencies.AgenciesFragment"
+        android:label="fragment_agencies"
+        tools:layout="@layout/fragment_agencies" >
+        <action
+            android:id="@+id/action_agenciesFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+        <action
+            android:id="@+id/action_agenciesFragment_to_subjectFragment"
+            app:destination="@id/subjectFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.example.resotest.view.details.DetailsFragment"
+        android:label="fragment_details"
+        tools:layout="@layout/fragment_details" >
+        <action
+            android:id="@+id/action_detailsFragment2_to_agenciesFragment"
+            app:destination="@id/agenciesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/subjectFragment"
+        android:name="com.example.resotest.view.subject.SubjectFragment"
+        android:label="SubjectFragment" >
+        <action
+            android:id="@+id/action_subjectFragment_to_agenciesFragment"
+            app:destination="@id/agenciesFragment" />
+    </fragment>
+</navigation>
