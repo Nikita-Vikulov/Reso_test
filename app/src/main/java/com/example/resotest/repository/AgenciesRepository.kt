@@ -3,10 +3,8 @@ package com.example.resotest.repository
 
 import com.example.resotest.api.ApiService
 import com.example.resotest.model.Agencies
-import com.example.resotest.model.Subject
 import com.example.resotest.room.AgenciesDao
 import com.example.resotest.utils.INetworkStatus
-import kotlinx.coroutines.flow.Flow
 
 
 class AgenciesRepository(
@@ -15,8 +13,6 @@ class AgenciesRepository(
     private val apiService: ApiService,
     private val agenciesMapper: AgenciesMapper
 ) {
-   // val allAgencies: Flow<List<Agencies>> = agenciesDao.getAllAgencies()
-
     private suspend fun insertAllAgencies(
         agencies: List<Agencies>
     ) {
@@ -35,7 +31,7 @@ class AgenciesRepository(
         }
     }
 
-    suspend fun getAgenciesById(nodeId: String): List<Agencies> {
+    suspend fun getAgenciesById(nodeId: Int): List<Agencies> {
             return agenciesDao.getAgenciesById(nodeId)
     }
 }

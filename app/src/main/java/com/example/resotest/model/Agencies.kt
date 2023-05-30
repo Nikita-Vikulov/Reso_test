@@ -9,8 +9,6 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = "agencies_table")
 @Parcelize
 data class Agencies(
-    @PrimaryKey(autoGenerate = true)
-    var id: Int = 0,
 
     @SerializedName("IDOKRUG")
     var idDistrict: Int = 0,
@@ -33,9 +31,6 @@ data class Agencies(
     @SerializedName("SSHORTADDRESS")
     var shortAddress: String = "",
 
-    //@SerializedName("IDUNDERGROUND")
-  //  var idUnderground: Int = 0, // нужно проверить
-
     @SerializedName("SDISTANCE")
     var distanceView: String = "",
 
@@ -45,14 +40,8 @@ data class Agencies(
     @SerializedName("SGRAF")
     var workSchedule: String = "",
 
-    //@SerializedName("GRAF")
-    //var workScheduleArray: ArrayList<>,
-
     @SerializedName("NLAT")
     var latitude: Double = 0.0,
-
-    //  @SerializedName("CPHONE")
-    //  var phoneArray: ArrayList<>,
 
     @SerializedName("REL")
     var rel: String = "",
@@ -64,6 +53,7 @@ data class Agencies(
     var idTown: Int = 0,
 
     @SerializedName("ID")
+    @PrimaryKey(autoGenerate = false)
     var nodeId: Int = 0,
 
     @SerializedName("SEMAIL")

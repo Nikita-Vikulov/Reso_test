@@ -66,7 +66,7 @@ class AgenciesFragmentAdapter(private val listener: IAgenciesClickListener) :
             }
 
             override fun areContentsTheSame(oldItem: Agencies, newItem: Agencies): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem.nodeId == newItem.nodeId
             }
         }
     }

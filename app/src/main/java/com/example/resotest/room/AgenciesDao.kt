@@ -2,7 +2,6 @@ package com.example.resotest.room
 
 import androidx.room.*
 import com.example.resotest.model.Agencies
-import kotlinx.coroutines.flow.Flow
 
 
 @Dao
@@ -22,6 +21,6 @@ interface AgenciesDao {
     @Query("SELECT * FROM agencies_table")
     suspend fun getAllAgencies(): List<Agencies>
 
-    @Query("SELECT * FROM agencies_table WHERE nodeId LIKE :nodeId")
-    suspend fun getAgenciesById(nodeId: String): List<Agencies>
+    @Query("SELECT * FROM agencies_table WHERE idDistrict LIKE :nodeId")
+    suspend fun getAgenciesById(nodeId: Int): List<Agencies>
 }

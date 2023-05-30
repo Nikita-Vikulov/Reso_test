@@ -21,7 +21,7 @@ class AgenciesViewModel(
         }
     }
 
-    fun getAgenciesById(nodeId: String) {
+    fun getAgenciesById(nodeId: Int) {
         viewModelScope.launch {
             _myAgencies.postValue(agenciesRepository.getAgenciesById(nodeId))
         }

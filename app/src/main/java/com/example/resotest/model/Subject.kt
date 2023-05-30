@@ -10,22 +10,20 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Subject(
 
-    @PrimaryKey(autoGenerate = true)
-    var id: Int = 0,
-
     @SerializedName("SNAME")
-    var name: String = "",
+    val name: String = "",
 
     @SerializedName("NTIMEZONE")
-    var timeZone: String = "",
+    val timeZone: String = "",
 
     @SerializedName("NORDER")
-    var order: Int = 0,
+    val order: Int = 0,
 
     @SerializedName("ID")
-    var nodeId: String = "",
+    @PrimaryKey(autoGenerate = false)
+    val nodeId: String = "",
 
     @SerializedName("ACTION_MY_REGION")
-    var actionMyRegion: String = ""
+    val actionMyRegion: String = ""
 
 ) : Parcelable
