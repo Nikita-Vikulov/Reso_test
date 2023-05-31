@@ -7,9 +7,6 @@ import com.example.resotest.model.Subject
 @Dao
 interface SubjectDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(subject: Subject)
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(
         subjectList: List<Subject>

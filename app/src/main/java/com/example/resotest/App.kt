@@ -1,34 +1,46 @@
 package com.example.resotest
 
 import android.app.Application
-import com.example.resotest.api.ApiService
-import com.example.resotest.api.RetrofitInstance
-import com.example.resotest.model.Agencies
+import com.example.resotest.di.AppComponent
+import com.example.resotest.di.DaggerAppComponent
+import com.example.resotest.di.modules.AppModule
 import com.example.resotest.repository.AgenciesMapper
 import com.example.resotest.repository.AgenciesRepository
 import com.example.resotest.repository.SubjectMapper
 import com.example.resotest.repository.SubjectRepository
 import com.example.resotest.room.ResoDatabase
-import com.example.resotest.utils.AndroidNetworkStatus
+import javax.inject.Inject
 
 class App : Application() {
-    private val database by lazy { ResoDatabase.getDatabase(this) }
-    private val apiService by lazy { RetrofitInstance.api }
-
-    val agenciesRepository by lazy {
-        AgenciesRepository(
-            database.getAgenciesDao(),
-            networkStatus = AndroidNetworkStatus(applicationContext),
-            apiService = apiService,
-            agenciesMapper = AgenciesMapper()
-        )
+    companion object {
+        lateinit var instance: App
     }
-    val subjectRepository by lazy {
-        SubjectRepository(
-            database.getSubjectDao(),
-            networkStatus = AndroidNetworkStatus(applicationContext),
-            apiService = apiService,
-            subjectMapper = SubjectMapper()
-        )
+
+    @Inject
+    lateinit var database: ResoDatabase
+
+    @Inject
+    lateinit var agenciesRepository: AgenciesRepository
+
+    @Inject
+    lateinit var subjectRepository: SubjectRepository
+
+    @Inject
+    lateinit var agenciesMapper: AgenciesMapper
+
+    @Inject
+    lateinit var subjectMapper: SubjectMapper
+
+    lateinit var appComponent: AppComponent
+
+    override fun onCreate() {
+        super.onCreate()
+        instance = this
+        appComponent = DaggerAppComponent.builder()
+            .app(this)
+            .appModule(AppModule(this))
+            .build()
+
+        appComponent.inject(this)
     }
 }

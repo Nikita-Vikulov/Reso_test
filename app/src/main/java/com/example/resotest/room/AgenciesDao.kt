@@ -7,9 +7,6 @@ import com.example.resotest.model.Agencies
 @Dao
 interface AgenciesDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(agencies: Agencies)
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(
         agenciesList: List<Agencies>

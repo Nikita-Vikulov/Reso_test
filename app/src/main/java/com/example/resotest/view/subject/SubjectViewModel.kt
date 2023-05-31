@@ -3,13 +3,13 @@ package com.example.resotest.view.subject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.resotest.model.Subject
 import com.example.resotest.repository.SubjectRepository
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SubjectViewModel(
+class SubjectViewModel @Inject constructor(
     private val subjectRepository: SubjectRepository
 ) : ViewModel() {
     private val _mySubject = MutableLiveData<List<Subject>>()
@@ -28,14 +28,3 @@ class SubjectViewModel(
     }
 }
 
-class ViewModelFactory(
-    private val subjectRepository: SubjectRepository
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(SubjectViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return SubjectViewModel(subjectRepository) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
-}

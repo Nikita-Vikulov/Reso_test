@@ -14,8 +14,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.resotest.App
@@ -26,10 +26,18 @@ import com.example.resotest.model.Agencies
 import com.example.resotest.view.BaseFragment
 import com.example.resotest.view.IAgenciesClickListener
 import com.example.resotest.view.INavigation
+import com.example.resotest.view.ViewModelFactory
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import javax.inject.Inject
 
 class AgenciesFragment : BaseFragment<FragmentAgenciesBinding>(), IAgenciesClickListener {
+
+    @Inject
+    lateinit var viewModeFactory: ViewModelFactory
+    private val agenciesViewModel: AgenciesViewModel by lazy {
+        ViewModelProvider(this, viewModeFactory)[AgenciesViewModel::class.java]
+    }
 
     private lateinit var mySharedPreferences: MySharedPreferences
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -37,12 +45,6 @@ class AgenciesFragment : BaseFragment<FragmentAgenciesBinding>(), IAgenciesClick
     private lateinit var recyclerView: RecyclerView
     private lateinit var listener: INavigation
     private val adapter by lazy { AgenciesFragmentAdapter(this) }
-
-    private val agenciesViewModel: AgenciesViewModel by viewModels {
-        ViewModelFactory(
-            (requireActivity().application as App).agenciesRepository
-        )
-    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -56,6 +58,7 @@ class AgenciesFragment : BaseFragment<FragmentAgenciesBinding>(), IAgenciesClick
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (requireActivity().application as App).appComponent.inject(this)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         mySharedPreferences = MySharedPreferences(requireContext())
         setupMenu()
@@ -124,7 +127,6 @@ class AgenciesFragment : BaseFragment<FragmentAgenciesBinding>(), IAgenciesClick
                         listener.openSubjectFragment()
                         true
                     }
-
                     else -> false
                 }
             }
@@ -138,5 +140,4 @@ class AgenciesFragment : BaseFragment<FragmentAgenciesBinding>(), IAgenciesClick
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1001
     }
-
 }

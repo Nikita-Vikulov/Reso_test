@@ -7,10 +7,8 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.resotest.AGENCIES
 import com.example.resotest.R
-import com.example.resotest.SUBJECT
 import com.example.resotest.databinding.ActivityMainBinding
 import com.example.resotest.model.Agencies
-import com.example.resotest.model.Subject
 
 class MainActivity : AppCompatActivity(), INavigation {
     private var _binding: ActivityMainBinding? = null

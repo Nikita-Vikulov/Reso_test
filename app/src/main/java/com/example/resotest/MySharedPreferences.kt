@@ -11,7 +11,8 @@ class MySharedPreferences(context: Context) {
         private const val SUBJECT_KEY = "subject_key"
     }
 
-    private val sharedPreferences: SharedPreferences? = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+    private val sharedPreferences: SharedPreferences? =
+        context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
     private val gson: Gson = Gson()
 
     fun saveSubject(subject: Subject) {

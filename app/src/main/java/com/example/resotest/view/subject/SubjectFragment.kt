@@ -1,5 +1,6 @@
 package com.example.resotest.view.subject
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -8,7 +9,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.PopupWindow
 import android.widget.SearchView
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.resotest.App
@@ -16,15 +17,17 @@ import com.example.resotest.MySharedPreferences
 import com.example.resotest.R
 import com.example.resotest.databinding.FragmentSubjectBinding
 import com.example.resotest.view.BaseFragment
+import com.example.resotest.view.ViewModelFactory
+import javax.inject.Inject
 
 class SubjectFragment : BaseFragment<FragmentSubjectBinding>() {
 
     private lateinit var mySharedPreferences: MySharedPreferences
 
-    private val subjectViewModel: SubjectViewModel by viewModels {
-        ViewModelFactory(
-            (requireActivity().application as App).subjectRepository
-        )
+    @Inject
+    lateinit var viewModeFactory: ViewModelFactory
+    private val subjectViewModel: SubjectViewModel by lazy {
+        ViewModelProvider(this, viewModeFactory)[SubjectViewModel::class.java]
     }
 
     override fun getViewBinding(container: ViewGroup?): FragmentSubjectBinding =
@@ -32,13 +35,15 @@ class SubjectFragment : BaseFragment<FragmentSubjectBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (requireActivity().application as App).appComponent.inject(this)
         mySharedPreferences = MySharedPreferences(requireContext())
         init()
     }
 
+    @SuppressLint("InflateParams")
     private fun init() {
-        val firstLine = "Регион"
-        var secondLine = "Выберите регион"
+        val firstLine = getString(R.string.region)
+        var secondLine = getString(R.string.select_region)
         if(mySharedPreferences.getSubject()?.name.toString() != "null"){
             secondLine = mySharedPreferences.getSubject()?.name.toString()
         }
